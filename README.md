@@ -290,20 +290,47 @@ Read the docs in order:
 9. [docs/09_output_constrained_prompt.md](docs/09_output_constrained_prompt.md)
 10. [docs/10_creative_prompt.md](docs/10_creative_prompt.md)
 
-## Visual references
+## Prompt Type Visuals
 
-The files in [visuals/](visuals) now include prompt-engineering visuals named by prompt type:
+### Zero-shot prompt
 
-- `zero_shot_prompt.png`
-- `one_shot_prompt.png`
-- `few_shot_prompt.png`
-- `instruction_based_prompt.png`
-- `role_based_prompt.png`
-- `chain_of_thought_prompt.png`
-- `contextual_prompt.png`
-- `conversational_prompt.png`
-- `output_constrained_prompt.png`
-- `creative_prompt.png`
+![Zero-shot prompt explained with a banking example](visuals/zero_shot_prompt.png)
+
+### One-shot prompt
+
+![One-shot prompt explained with a banking example](visuals/one_shot_prompt.png)
+
+### Few-shot prompt
+
+![Few-shot prompt explained with a banking example](visuals/few_shot_prompt.png)
+
+### Instruction-based prompt
+
+![Instruction-based prompt explained with a banking example](visuals/instruction_based_prompt.png)
+
+### Role-based prompt
+
+![Role-based prompt explained with a banking example](visuals/role_based_prompt.png)
+
+### Chain-of-thought prompt
+
+![Chain-of-thought prompt explained with a banking example](visuals/chain_of_thought_prompt.png)
+
+### Contextual prompt
+
+![Contextual prompt explained with a banking example](visuals/contextual_prompt.png)
+
+### Conversational prompt
+
+![Conversational prompt explained with a banking example](visuals/conversational_prompt.png)
+
+### Output-constrained prompt
+
+![Output-constrained prompt explained with a banking example](visuals/output_constrained_prompt.png)
+
+### Creative prompt
+
+![Creative prompt explained with a banking example](visuals/creative_prompt.png)
 
 ## Tests
 
