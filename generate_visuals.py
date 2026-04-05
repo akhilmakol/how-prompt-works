@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import textwrap
 from pathlib import Path
 
 MPL_CONFIG_DIR = Path(__file__).resolve().parent / ".mplconfig"
@@ -14,21 +15,119 @@ os.environ.setdefault("MPLCONFIGDIR", str(MPL_CONFIG_DIR))
 
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 ROOT = Path(__file__).resolve().parent
 VISUALS = ROOT / "visuals"
 VISUALS.mkdir(exist_ok=True)
 
-BG = "#f5efe4"
+BG = "#f4efe6"
 NAVY = "#17324d"
-TEAL = "#2f7c82"
-GOLD = "#c88b3a"
-CORAL = "#d0674a"
-SAGE = "#7a9b76"
-INK = "#24313f"
+INK = "#2a3744"
 WHITE = "#fffdf8"
+ACCENTS = {
+    "gold": ("#c88934", "#fff5e6"),
+    "teal": ("#2f7c82", "#edf8f8"),
+    "coral": ("#d46b4d", "#fff1ec"),
+    "sage": ("#7a9b76", "#f2f8f0"),
+}
+
+PROMPT_TYPES = [
+    {
+        "filename": "zero_shot_prompt.png",
+        "title": "Zero-shot Prompt",
+        "accent": "gold",
+        "definition": "A direct instruction with no examples. The model must respond from the task wording alone.",
+        "example": "Explain a savings account in simple language.",
+        "best_for": "Fast, simple banking questions or first-draft answers.",
+        "watch": "Can be vague or inconsistent for structured outputs.",
+    },
+    {
+        "filename": "one_shot_prompt.png",
+        "title": "One-shot Prompt",
+        "accent": "teal",
+        "definition": "A single example teaches the pattern before the real banking question appears.",
+        "example": "Deposit -> banking term\nMortgage -> ?",
+        "best_for": "Quick pattern teaching when one example is enough.",
+        "watch": "May still be unstable if the task needs more guidance.",
+    },
+    {
+        "filename": "few_shot_prompt.png",
+        "title": "Few-shot Prompt",
+        "accent": "coral",
+        "definition": "Multiple examples demonstrate the structure or labeling style you want the model to follow.",
+        "example": "Savings account -> deposit product\nMortgage -> loan product\nCredit card -> ?",
+        "best_for": "Classification, extraction, and repeatable banking formats.",
+        "watch": "Longer prompts cost more context window.",
+    },
+    {
+        "filename": "instruction_based_prompt.png",
+        "title": "Instruction-based Prompt",
+        "accent": "sage",
+        "definition": "A clear task description tells the model exactly what to produce.",
+        "example": "Write a professional summary of mortgage interest for new customers.",
+        "best_for": "Real-world business writing and operational tasks.",
+        "watch": "Needs precise wording when the output style matters.",
+    },
+    {
+        "filename": "role_based_prompt.png",
+        "title": "Role-based Prompt",
+        "accent": "gold",
+        "definition": "A persona or role nudges tone, expertise, and vocabulary.",
+        "example": "You are a senior loan officer. Explain mortgage interest to a first-time borrower.",
+        "best_for": "Domain-aligned explanations in banking and fintech.",
+        "watch": "A role helps tone, but it does not create missing knowledge.",
+    },
+    {
+        "filename": "chain_of_thought_prompt.png",
+        "title": "Chain-of-Thought Prompt",
+        "accent": "teal",
+        "definition": "The prompt asks for step-by-step reasoning so the model exposes intermediate logic.",
+        "example": "Explain step by step how interest on a savings account is calculated.",
+        "best_for": "Reasoning, calculations, and multi-step banking logic.",
+        "watch": "Helpful for reasoning, but still limited by training quality.",
+    },
+    {
+        "filename": "contextual_prompt.png",
+        "title": "Contextual Prompt",
+        "accent": "coral",
+        "definition": "Background information makes the answer more relevant to the situation.",
+        "example": "Our fintech app serves first-time borrowers. Suggest features for a loan education assistant.",
+        "best_for": "Product thinking, personalization, and tailored banking answers.",
+        "watch": "Weak context leads to generic output.",
+    },
+    {
+        "filename": "conversational_prompt.png",
+        "title": "Conversational Prompt",
+        "accent": "sage",
+        "definition": "A back-and-forth exchange lets the model refine the answer through dialogue.",
+        "example": "User: I need a bank account.\nAI: What matters most: low fees, high interest, or mobile access?",
+        "best_for": "Guided discovery and assistant-style banking experiences.",
+        "watch": "Quality depends on follow-up questions and memory of the thread.",
+    },
+    {
+        "filename": "output_constrained_prompt.png",
+        "title": "Output-constrained Prompt",
+        "accent": "gold",
+        "definition": "The prompt specifies a required format such as JSON, bullets, or a table.",
+        "example": "Return JSON with fields: product_name, benefit, risk.",
+        "best_for": "APIs, workflows, agents, and automation-friendly banking outputs.",
+        "watch": "If the format is underspecified, the output may drift.",
+    },
+    {
+        "filename": "creative_prompt.png",
+        "title": "Creative Prompt",
+        "accent": "coral",
+        "definition": "The goal is ideation, storytelling, or concept exploration rather than strict factual structure.",
+        "example": "Write a short story about an AI banker teaching children why saving money matters.",
+        "best_for": "Content creation, campaigns, and education concepts.",
+        "watch": "Creativity can reduce precision if the task also needs strict accuracy.",
+    },
+]
+
+
+def wrap(text: str, width: int) -> str:
+    return "\n".join(textwrap.fill(line, width=width) if line else "" for line in text.splitlines())
 
 
 def setup_canvas(title: str, subtitle: str):
@@ -38,238 +137,67 @@ def setup_canvas(title: str, subtitle: str):
     ax.set_xlim(0, 16)
     ax.set_ylim(0, 9)
     ax.axis("off")
-    ax.text(0.6, 8.35, title, fontsize=28, fontweight="bold", color=NAVY)
-    ax.text(0.6, 7.9, subtitle, fontsize=12.5, color=INK)
+    ax.text(0.7, 8.25, title, fontsize=30, fontweight="bold", color=NAVY, va="top")
+    ax.text(0.7, 7.55, subtitle, fontsize=13, color=INK, va="top")
     return fig, ax
 
 
-def box(ax, x, y, w, h, title, body, color=NAVY, face=WHITE, fontsize=11):
+def panel(ax, x: float, y: float, w: float, h: float, title: str, body: str, edge: str, face: str):
     rect = patches.FancyBboxPatch(
         (x, y),
         w,
         h,
-        boxstyle="round,pad=0.02,rounding_size=0.18",
-        linewidth=2,
-        edgecolor=color,
+        boxstyle="round,pad=0.02,rounding_size=0.16",
+        linewidth=2.2,
+        edgecolor=edge,
         facecolor=face,
     )
     ax.add_patch(rect)
-    ax.text(x + 0.22, y + h - 0.32, title, fontsize=14, fontweight="bold", color=color, va="top")
-    ax.text(x + 0.22, y + h - 0.72, body, fontsize=fontsize, color=INK, va="top", wrap=True)
+    ax.text(x + 0.28, y + h - 0.34, title, fontsize=16, fontweight="bold", color=edge, va="top")
+    ax.text(x + 0.28, y + h - 0.84, body, fontsize=11.5, color=INK, va="top", linespacing=1.35)
 
 
-def arrow(ax, x1, y1, x2, y2, color=NAVY, lw=2):
-    ax.annotate(
-        "",
-        xy=(x2, y2),
-        xytext=(x1, y1),
-        arrowprops=dict(arrowstyle="->", lw=lw, color=color, shrinkA=4, shrinkB=4),
+def banner(ax, x: float, y: float, w: float, h: float, text: str, edge: str, face: str):
+    rect = patches.FancyBboxPatch(
+        (x, y),
+        w,
+        h,
+        boxstyle="round,pad=0.02,rounding_size=0.14",
+        linewidth=1.8,
+        edgecolor=edge,
+        facecolor=face,
     )
+    ax.add_patch(rect)
+    ax.text(x + 0.22, y + h / 2, text, fontsize=12.2, color=INK, va="center")
 
 
-def save(fig, name: str):
-    path = VISUALS / name
-    fig.savefig(path, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+def render_prompt_type(spec: dict):
+    edge, face = ACCENTS[spec["accent"]]
+    fig, ax = setup_canvas(
+        spec["title"],
+        "Prompt engineering with banking fundamentals: what it is, when to use it, and what to watch for.",
+    )
+    panel(ax, 0.8, 4.25, 6.1, 2.3, "What It Means", wrap(spec["definition"], 42), edge, face)
+    panel(ax, 7.3, 4.25, 7.0, 2.3, "Banking Example Prompt", wrap(spec["example"], 43), edge, WHITE)
+    panel(ax, 0.8, 1.45, 6.1, 2.0, "Best For", wrap(spec["best_for"], 42), NAVY, "#eef4fb")
+    panel(ax, 7.3, 1.45, 7.0, 2.0, "Watch Out For", wrap(spec["watch"], 46), NAVY, "#eef4fb")
+    banner(
+        ax,
+        0.8,
+        0.45,
+        13.5,
+        0.62,
+        "Prompt formula reminder: [Role] + [Task] + [Context] + [Output Format]",
+        edge,
+        "#f9f7f1",
+    )
+    fig.savefig(VISUALS / spec["filename"], dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
     plt.close(fig)
 
 
-def make_cover():
-    fig, ax = setup_canvas(
-        "How Prompt Works",
-        "Ten prompt engineering patterns explained through banking fundamentals.",
-    )
-    prompt = (
-        "Prompt example:\n"
-        "You are a banking tutor.\n"
-        "Explain mortgage interest to a first-time borrower.\n"
-        "Output as 3 bullet points."
-    )
-    box(ax, 0.7, 5.3, 5.0, 2.0, "Core Prompt Formula", prompt, color=GOLD, face="#fff7eb")
-    items = [
-        ("Zero-shot", "Explain a savings account."),
-        ("One-shot", "Deposit -> banking term\nMortgage -> ?"),
-        ("Few-shot", "Savings -> deposit\nMortgage -> loan\nCredit card -> ?"),
-        ("Instruction", "Write a loan summary in plain English."),
-        ("Role-based", "You are a branch manager. Explain KYC."),
-        ("Chain-of-thought", "Explain step by step how interest is calculated."),
-        ("Contextual", "We build fintech apps for borrowers. Suggest features."),
-        ("Conversational", "User: I need a bank account.\nAI: What matters most?"),
-        ("Output-constrained", "Return JSON: product, benefit, risk."),
-        ("Creative", "Write a story about AI teaching saving habits."),
-    ]
-    left_x, right_x = 0.7, 8.25
-    y_positions = [4.55, 3.65, 2.75, 1.85, 0.95]
-    for idx, (title, body) in enumerate(items[:5]):
-        box(ax, left_x, y_positions[idx], 6.6, 0.72, title, body, color=TEAL, face="#f2fbfb", fontsize=9.6)
-    for idx, (title, body) in enumerate(items[5:]):
-        box(ax, right_x, y_positions[idx], 6.9, 0.72, title, body, color=CORAL, face="#fff4f0", fontsize=9.6)
-    ax.text(6.3, 6.15, "Good prompts = clearer tokens + better context for the model", fontsize=12, color=SAGE)
-    save(fig, "cover.png")
-
-
-def make_pipeline():
-    fig, ax = setup_canvas(
-        "Prompt Design Pipeline",
-        "A banking prompt becomes model-ready context through a sequence of transformations.",
-    )
-    steps = [
-        ("Role", "You are a banking tutor"),
-        ("Task", "Explain a home loan"),
-        ("Context", "Audience: first-time borrower"),
-        ("Format", "Return 3 bullet points"),
-    ]
-    x_positions = [0.8, 4.2, 7.6, 11.0]
-    colors = [GOLD, TEAL, SAGE, CORAL]
-    for (title, body), x, color in zip(steps, x_positions, colors):
-        box(ax, x, 5.8, 3.0, 1.3, title, body, color=color, face=WHITE)
-    for i in range(3):
-        arrow(ax, x_positions[i] + 3.05, 6.45, x_positions[i + 1] - 0.1, 6.45, color=NAVY)
-    box(
-        ax,
-        1.0,
-        3.5,
-        13.2,
-        1.2,
-        "Combined Prompt",
-        "You are a banking tutor. Explain a home loan to a first-time borrower. Return 3 bullet points.",
-        color=NAVY,
-        face="#eef4fb",
-    )
-    stages = [
-        ("Tokenize", "['you', 'are', 'a', 'banking', 'tutor', ...]"),
-        ("Embed", "Each token becomes a vector"),
-        ("Attend", "Model links 'home loan', 'borrower', 'bullet points'"),
-        ("Generate", "Predicts the next token one step at a time"),
-    ]
-    stage_x = [0.8, 4.2, 7.6, 11.0]
-    for (title, body), x in zip(stages, stage_x):
-        box(ax, x, 1.4, 3.0, 1.25, title, body, color=NAVY, face="#fbfbfd", fontsize=10)
-    for i in range(3):
-        arrow(ax, stage_x[i] + 3.05, 2.0, stage_x[i + 1] - 0.1, 2.0, color=TEAL)
-    arrow(ax, 8.0, 5.8, 8.0, 4.75, color=CORAL)
-    arrow(ax, 8.0, 3.45, 8.0, 2.75, color=CORAL)
-    save(fig, "pipeline.png")
-
-
-def make_tokenization():
-    fig, ax = setup_canvas(
-        "Zero-shot, One-shot, and Few-shot",
-        "Examples change the tokens the model sees, which changes the pattern it can continue.",
-    )
-    box(ax, 0.8, 4.9, 4.6, 2.5, "Zero-shot", "Prompt:\nExplain a savings account.\n\nBest for simple tasks.\nLess guidance for structure.", color=GOLD, face="#fff7eb")
-    box(ax, 5.7, 4.9, 4.6, 2.5, "One-shot", "Prompt:\nDeposit -> deposit product\nMortgage -> ?\n\nOne example teaches the pattern.", color=TEAL, face="#f2fbfb")
-    box(ax, 10.6, 4.9, 4.6, 2.5, "Few-shot", "Prompt:\nSavings -> deposit\nMortgage -> loan\nCredit card -> ?\n\nMultiple examples improve consistency.", color=CORAL, face="#fff4f0")
-    tokens = ["you", "are", "a", "banking", "tutor", "explain", "savings", "account"]
-    ax.text(0.9, 3.6, "Token view of a richer banking prompt", fontsize=15, fontweight="bold", color=NAVY)
-    x = 0.95
-    chip_colors = [NAVY, TEAL, GOLD, SAGE, CORAL, NAVY, TEAL, GOLD]
-    for token, color in zip(tokens, chip_colors):
-        width = 0.65 + 0.08 * len(token)
-        rect = patches.FancyBboxPatch((x, 2.5), width, 0.62, boxstyle="round,pad=0.03,rounding_size=0.1", linewidth=1.8, edgecolor=color, facecolor=WHITE)
-        ax.add_patch(rect)
-        ax.text(x + width / 2, 2.81, token, ha="center", va="center", fontsize=10, color=INK)
-        x += width + 0.12
-    box(ax, 0.9, 0.8, 14.2, 1.0, "Banking takeaway", "Adding examples makes the prompt longer, clearer, and easier for the model to pattern-match.", color=SAGE, face="#f5fbf2")
-    save(fig, "tokenization.png")
-
-
-def make_embeddings():
-    fig, ax = setup_canvas(
-        "Instruction-based and Role-based Prompts",
-        "Roles and instructions influence how the model interprets the same banking topic.",
-    )
-    box(ax, 0.9, 5.1, 5.8, 2.2, "Instruction-based prompt", "Write a professional summary of mortgage interest for new customers.", color=TEAL, face="#f2fbfb")
-    box(ax, 9.3, 5.1, 5.8, 2.2, "Role-based prompt", "You are a senior loan officer. Explain mortgage interest to a first-time buyer.", color=CORAL, face="#fff4f0")
-    arrow(ax, 6.8, 6.2, 9.1, 6.2, color=NAVY)
-    ax.text(6.95, 6.45, "same topic", fontsize=11, color=INK)
-    ax.text(0.9, 3.9, "Embedding intuition", fontsize=16, fontweight="bold", color=NAVY)
-    ax.text(0.9, 3.45, "Different prompt words create different vector patterns inside the model.", fontsize=12, color=INK)
-    words = [("mortgage", 1.6, 2.2, GOLD), ("interest", 4.7, 1.6, TEAL), ("buyer", 8.0, 2.0, CORAL), ("officer", 11.3, 1.5, SAGE)]
-    for word, x, y, color in words:
-        circle = patches.Circle((x, y), 0.55, linewidth=2, edgecolor=color, facecolor=WHITE)
-        ax.add_patch(circle)
-        ax.text(x, y + 0.02, word, ha="center", va="center", fontsize=11, color=INK)
-    for i in range(len(words) - 1):
-        arrow(ax, words[i][1] + 0.55, words[i][2], words[i + 1][1] - 0.6, words[i + 1][2], color=NAVY, lw=1.6)
-    box(ax, 0.9, 0.55, 14.2, 0.95, "Banking takeaway", "Role tokens like 'loan officer' nudge the answer toward domain tone; instruction tokens nudge the format and task.", color=NAVY, face="#eef4fb")
-    save(fig, "embeddings.png")
-
-
-def make_attention():
-    fig, ax = setup_canvas(
-        "Contextual and Chain-of-Thought Prompts",
-        "Attention helps later banking tokens focus on the most useful earlier context.",
-    )
-    prompt = "You are a central banking analyst. Explain step by step why higher policy rates slow borrowing."
-    box(ax, 0.8, 6.0, 14.4, 1.45, "Prompt", prompt, color=NAVY, face="#eef4fb")
-    tokens = ["central", "banking", "analyst", "step", "by", "step", "policy", "rates", "slow", "borrowing"]
-    xs = np.linspace(1.4, 14.0, len(tokens))
-    for token, x in zip(tokens, xs):
-        rect = patches.FancyBboxPatch((x - 0.52, 3.95), 1.04, 0.56, boxstyle="round,pad=0.02,rounding_size=0.09", linewidth=1.5, edgecolor=TEAL, facecolor=WHITE)
-        ax.add_patch(rect)
-        ax.text(x, 4.23, token, ha="center", va="center", fontsize=9.4, color=INK)
-    target_x = xs[-1]
-    for idx in [0, 1, 3, 6, 7, 8]:
-        arrow(ax, xs[idx], 3.95, target_x, 3.2, color=CORAL if idx in [6, 7, 8] else NAVY, lw=2)
-    ax.text(target_x + 0.1, 3.0, "predicting\n'borrowing'", fontsize=10, color=CORAL, ha="left")
-    box(ax, 0.9, 0.8, 6.6, 1.55, "Contextual prompt", "Our fintech app serves first-time borrowers. Suggest educational features for loan repayment.", color=GOLD, face="#fff7eb")
-    box(ax, 8.0, 0.8, 7.1, 1.55, "Chain-of-thought prompt", "Explain step by step how a central bank changes rates to control inflation.", color=CORAL, face="#fff4f0")
-    save(fig, "attention.png")
-
-
-def make_transformer():
-    fig, ax = setup_canvas(
-        "Conversational and Output-constrained Prompts",
-        "Transformer blocks combine prompt context, dialogue state, and formatting constraints.",
-    )
-    box(ax, 0.9, 5.25, 5.3, 1.9, "Conversational prompt", "User: I need a bank account.\nAI: What matters most: low fees, high interest, or mobile access?", color=TEAL, face="#f2fbfb")
-    box(ax, 9.8, 5.25, 5.3, 1.9, "Output-constrained prompt", "Return JSON with fields:\nproduct_name, benefit, risk", color=CORAL, face="#fff4f0")
-    box(ax, 5.95, 2.4, 4.2, 2.0, "Transformer block", "Layer norm\nSelf-attention\nResidual path\nFeed-forward network", color=NAVY, face="#eef4fb")
-    arrow(ax, 6.3, 5.15, 7.0, 4.45, color=TEAL)
-    arrow(ax, 9.8, 5.15, 9.0, 4.45, color=CORAL)
-    arrow(ax, 8.05, 2.35, 8.05, 1.45, color=NAVY)
-    box(ax, 4.4, 0.55, 7.3, 0.95, "Banking takeaway", "The model blends what the user asked, what the chat already contains, and how the output must be formatted.", color=SAGE, face="#f5fbf2")
-    save(fig, "transformer.png")
-
-
-def make_training():
-    fig, ax = setup_canvas(
-        "Creative Prompts and Banking Training Data",
-        "Prompt quality helps, but the model can only continue patterns it learned during training.",
-    )
-    box(ax, 0.8, 5.2, 4.9, 2.0, "Creative prompt", "Write a short story about an AI banker teaching children why saving money matters.", color=CORAL, face="#fff4f0")
-    box(ax, 6.0, 5.2, 4.1, 2.0, "Training sentence", "A savings account helps people store money and earn interest over time.", color=GOLD, face="#fff7eb")
-    box(ax, 10.4, 5.2, 4.8, 2.0, "Training sentence", "A loan allows a customer to borrow money and repay it in installments.", color=TEAL, face="#f2fbfb")
-    arrow(ax, 8.0, 4.95, 8.0, 3.8, color=NAVY)
-    box(ax, 3.0, 2.1, 10.0, 1.35, "What training teaches", "Words like savings, interest, loan, borrower, and repayment become linked. Prompting activates those learned links.", color=NAVY, face="#eef4fb")
-    box(ax, 2.4, 0.55, 11.2, 0.95, "Banking takeaway", "A creative banking prompt works better when the training corpus already contains the vocabulary and relationships it needs.", color=SAGE, face="#f5fbf2")
-    save(fig, "training.png")
-
-
-def make_inference():
-    fig, ax = setup_canvas(
-        "Inference: Weak Prompt vs Strong Prompt",
-        "The same banking topic can produce very different output depending on prompt structure.",
-    )
-    box(ax, 0.8, 5.15, 6.4, 2.2, "Weak prompt", "Explain a loan.", color=GOLD, face="#fff7eb")
-    box(ax, 8.0, 5.15, 7.0, 2.2, "Strong prompt", "You are a banking tutor. Explain a loan to a first-time borrower in 3 bullet points.", color=TEAL, face="#f2fbfb")
-    box(ax, 0.8, 2.0, 6.4, 2.2, "Likely output shape", "May be short, generic, or inconsistent.", color=GOLD, face=WHITE)
-    box(ax, 8.0, 2.0, 7.0, 2.2, "Likely output shape", "More focused tone, clearer audience match, and better structure.", color=TEAL, face=WHITE)
-    arrow(ax, 4.0, 4.95, 4.0, 4.25, color=CORAL)
-    arrow(ax, 11.5, 4.95, 11.5, 4.25, color=CORAL)
-    box(ax, 1.7, 0.55, 12.6, 0.92, "Final takeaway", "Prompt engineering improves inference by giving the model the right role, task, context, and output constraints before generation begins.", color=NAVY, face="#eef4fb")
-    save(fig, "inference.png")
-
-
 def main():
-    make_cover()
-    make_pipeline()
-    make_tokenization()
-    make_embeddings()
-    make_attention()
-    make_transformer()
-    make_training()
-    make_inference()
+    for spec in PROMPT_TYPES:
+        render_prompt_type(spec)
 
 
 if __name__ == "__main__":
