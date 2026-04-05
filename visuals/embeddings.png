@@ -1,4 +1,4 @@
 Placeholder diagram specification:
-Show token IDs turning into dense vectors.
+Show prompt token IDs turning into dense vectors.
 Include positional embeddings being added to token embeddings.
 Use the example tokens "loan", "interest", and "deposit".

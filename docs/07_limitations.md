@@ -2,7 +2,7 @@
 
 ## This is a teaching model
 
-Our mini GPT is useful for learning, but it is not a production banking model.
+Our mini GPT is useful for learning, but it is not a production banking model and it is not a reliable prompt-engineering benchmark.
 
 ## Main limitations
 
@@ -22,7 +22,7 @@ Our tokenizer is easier to understand, but less flexible.
 
 The model only sees a limited number of tokens at once.
 
-It cannot track long documents or complex reports well.
+It cannot track long prompts, policy documents, or complex banking reports well.
 
 ### Greedy decoding only
 
@@ -33,6 +33,12 @@ Greedy decoding is simple, but it is not always the best choice for high-quality
 The model does not understand regulation, credit policy, or accounting logic.
 
 It only learns patterns from the sample text.
+
+### Prompt engineering limits
+
+Better prompting helps, but prompting cannot create knowledge that the model never learned.
+
+For example, a well-structured prompt about Basel capital rules will still fail if the model was never trained on that topic.
 
 ## Important caution
 

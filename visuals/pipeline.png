@@ -1,3 +1,3 @@
 Placeholder diagram specification:
-Illustrate the full pipeline from text prompt to tokens, embeddings, attention, transformer blocks, logits, and generated output.
-Use a banking-themed example such as "a bank offers".
+Illustrate the full pipeline from prompt design to tokens, embeddings, attention, transformer blocks, logits, and generated output.
+Use a banking-themed example such as "You are a banking tutor. Explain what a bank offers."

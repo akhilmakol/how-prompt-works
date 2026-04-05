@@ -2,37 +2,76 @@
 
 ## What is this project?
 
-This project explains how a small language model works by using simple banking statements as training data.
+This project explains prompt engineering and language model internals together.
 
-Instead of jumping straight into giant production LLMs, we start with a tiny system that still captures the key ideas:
+We use banking fundamentals as the scenario for every tutorial because banking language is practical, structured, and easy to reason about.
 
-- break text into tokens
+Instead of jumping straight into huge production models, we start with a tiny system that still captures the key ideas:
+
+- write a prompt
+- break the prompt into tokens
 - turn tokens into vectors
 - let tokens attend to each other
 - train the model to predict the next token
 - generate text one token at a time
 
-## Why prompts matter
+## What is a prompt?
 
-A prompt is the starting text we give the model.
+A prompt is the input or instruction you give to an AI model.
+
+It can be:
+
+- a question
+- a command
+- a scenario
+- a role plus a task
+
+Banking examples:
+
+```text
+What is a savings account?
+Write a summary of loan repayment in simple language.
+You are a banking tutor. Explain interest rates to a teenager.
+```
+
+The quality of the prompt strongly affects the quality of the response.
+
+## Prompt engineering lens
+
+Throughout this repository, we use a simple prompt-writing framework:
+
+```text
+[Role] + [Task] + [Context] + [Output Format]
+```
 
 Example:
 
 ```text
-a bank offers
+You are a fintech product manager.
+Design a chatbot for loan applications.
+Target users are first-time borrowers.
+Output as a step-by-step flow.
 ```
 
-The model reads that prompt, looks at patterns it learned during training, and predicts the most likely next token.
+This helps us connect prompt design with model behavior.
 
-Because the model was trained on banking fundamentals, it may continue with words like:
+## Why prompts matter inside the model
 
-- `deposits`
-- `loans`
-- `customers`
+A model does not see meaning directly. It sees tokens and patterns.
+
+Example prompt:
+
+```text
+You are a banking tutor. Explain a mortgage.
+```
+
+The model breaks this into pieces, converts those pieces into vectors, and predicts the next token based on what it learned during training.
 
 ## Intuition
 
-You can think of the model as a pattern-completion machine. It does not understand banking like a banker. It learns statistical relationships between words and phrases.
+You can think of the model as a pattern-completion system.
+
+It does not understand banking like a human banker. It learns statistical relationships between words and phrases.
 
 Example:
 
@@ -46,6 +85,8 @@ After seeing many examples like that, the model learns that `savings` often appe
 
 By the end of this repository, you should be able to explain:
 
+- what a prompt is
+- how prompt wording changes model behavior
 - what tokenization does
 - what embeddings are
 - how self-attention works
@@ -65,4 +106,4 @@ Our examples focus on common banking topics:
 - risk management
 - fraud detection
 
-That gives us a practical domain with clear vocabulary and repeatable sentence structure.
+That gives us a clear and realistic domain for both prompt design and model internals.

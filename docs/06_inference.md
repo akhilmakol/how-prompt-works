@@ -2,12 +2,12 @@
 
 ## What happens during inference?
 
-Inference means using a trained model to generate text.
+Inference means using a trained model to generate text from a prompt.
 
-We begin with a prompt:
+We begin with a prompt such as:
 
 ```text
-a savings account
+You are a banking tutor. Explain a savings account.
 ```
 
 Then the model:
@@ -17,6 +17,26 @@ Then the model:
 3. predicts the next token
 4. appends that token
 5. repeats
+
+## Prompt engineering view
+
+Inference is where prompt engineering becomes visible.
+
+Compare these prompts:
+
+```text
+Explain a loan.
+You are a loan officer. Explain a loan to a first-time borrower in simple bullet points.
+```
+
+The second prompt gives the model:
+
+- a role
+- a task
+- user context
+- an output style
+
+That usually produces a more targeted answer.
 
 ## Greedy decoding
 
@@ -48,12 +68,12 @@ But it can also:
 - become predictable
 - miss more creative continuations
 
-## Banking example
+## Banking tutorial example
 
 Prompt:
 
 ```text
-the central bank
+You are a central banking analyst. Explain why the central bank changes rates.
 ```
 
 Possible continuation:

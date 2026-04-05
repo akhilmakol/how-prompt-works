@@ -57,7 +57,11 @@ def render_attention_heatmap(model, tokenizer, prompt: str) -> None:
 def main() -> None:
     st.set_page_config(page_title="How LLM Works", layout="wide")
     st.title("How LLM Works")
-    st.caption("A banking-themed, visual walkthrough of prompting and a mini GPT-style model.")
+    st.caption("A banking-themed, visual walkthrough of prompt engineering and a mini GPT-style model.")
+    st.info(
+        "Prompt framework used across this demo: [Role] + [Task] + [Context] + [Output Format]. "
+        "Try prompts like 'You are a banking tutor. Explain savings accounts in 3 bullet points.'"
+    )
 
     with st.spinner("Loading model and tokenizer..."):
         model, tokenizer = ensure_model()
@@ -67,8 +71,14 @@ def main() -> None:
     )
 
     with tab_generate:
-        st.subheader("Generate banking text")
-        prompt = st.text_input("Prompt", value="a bank offers")
+        st.subheader("Prompt Playground")
+        st.markdown(
+            "Test how different prompt styles change output. Start simple, then add role, context, or format."
+        )
+        prompt = st.text_input(
+            "Prompt",
+            value="You are a banking tutor. Explain what a bank offers.",
+        )
         max_new_tokens = st.slider("Max new tokens", min_value=1, max_value=30, value=12)
         if st.button("Generate text", use_container_width=True):
             input_ids = torch.tensor([tokenizer.encode(prompt, add_special_tokens=True)], dtype=torch.long)
@@ -77,10 +87,11 @@ def main() -> None:
             st.success(output_text)
 
     with tab_tokenize:
-        st.subheader("Explore tokenization")
+        st.subheader("Prompt Tokenization Explorer")
+        st.markdown("See how a banking prompt is broken into tokens before the model can process it.")
         sample_text = st.text_area(
-            "Enter a sentence",
-            value="A savings account helps customers store money safely.",
+            "Enter a prompt",
+            value="You are a loan officer. Explain mortgage interest to a first-time homebuyer.",
             height=120,
         )
         tokens = tokenizer.tokenize(sample_text)
@@ -90,10 +101,14 @@ def main() -> None:
         st.write("Decoded text:", tokenizer.decode(token_ids))
 
     with tab_attention:
-        st.subheader("Visualize self-attention")
-        attention_prompt = st.text_input("Prompt for attention map", value="the central bank sets rates")
+        st.subheader("Prompt Attention Visualization")
+        attention_prompt = st.text_input(
+            "Prompt for attention map",
+            value="the central bank sets rates to control inflation",
+        )
         st.markdown(
-            "This heatmap shows how one attention head in the final transformer layer distributes focus across tokens."
+            "This heatmap shows how one attention head in the final transformer layer distributes focus across "
+            "tokens in a banking prompt."
         )
         render_attention_heatmap(model, tokenizer, attention_prompt)
 

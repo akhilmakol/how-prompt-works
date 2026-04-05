@@ -16,6 +16,20 @@ the target next token may be:
 customers
 ```
 
+## Why this matters for prompt engineering
+
+A model responds to prompts by continuing token patterns it has learned during training.
+
+That means prompt engineering is powerful because the prompt changes which learned patterns are activated.
+
+For example:
+
+```text
+You are a banking tutor. Explain a loan.
+```
+
+works only if the model has already learned useful associations around words like `loan`, `borrow`, `interest`, and `repayment`.
+
 ## Training data
 
 We train on [data/sample.txt](/C:/dev/how-prompt-works/data/sample.txt), which contains short banking-fundamental statements.
@@ -63,7 +77,7 @@ During training:
 4. backpropagate gradients
 5. update weights
 
-## Banking example
+## Banking tutorial example
 
 Sentence:
 
@@ -78,3 +92,11 @@ A loan allows a customer to borrow
 ```
 
 and learn that `money` is a strong next-token candidate.
+
+After enough training, a prompt like:
+
+```text
+Explain how a loan allows a customer to borrow
+```
+
+is more likely to produce banking-related continuations because the model has learned that those words belong together.

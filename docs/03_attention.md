@@ -1,13 +1,23 @@
 # 03. Attention
 
-## The core idea
+## Attention starts with the prompt
 
-Attention helps a token decide which earlier tokens matter most.
+Suppose the prompt is:
+
+```text
+You are a banking tutor. Explain why higher policy rates slow borrowing.
+```
+
+Not every token matters equally when the model predicts the next word.
+
+Attention helps the model decide which earlier tokens deserve the most focus.
+
+## The core idea
 
 When reading:
 
 ```text
-Higher policy rates can slow borrowing.
+higher policy rates slow borrowing
 ```
 
 the token `borrowing` should pay attention to:
@@ -16,25 +26,27 @@ the token `borrowing` should pay attention to:
 - `policy`
 - `slow`
 
-Those words provide the context needed to predict or interpret the sentence.
+Those words provide the context needed to interpret the phrase.
 
-## Why self-attention is useful
+## Why self-attention is useful for prompts
 
-In ordinary reading, meaning often depends on relationships across the sentence.
+Prompt engineering is often about giving the model the right context.
 
-Banking example:
+Example prompt:
 
 ```text
-The central bank raised rates because inflation stayed high.
+You are a central banking analyst. Explain why inflation can lead to higher rates.
 ```
 
-The word `raised` is closely tied to:
+In this prompt, the later tokens should connect with earlier tokens such as:
 
-- `central bank`
-- `rates`
+- `central`
+- `banking`
 - `inflation`
+- `higher`
+- `rates`
 
-Self-attention lets the model connect those words, even if they are not adjacent.
+Self-attention lets the model connect those words even when they are not adjacent.
 
 ## Scaled dot-product attention
 
@@ -44,9 +56,9 @@ The mechanism uses three learned views of each token:
 - Key: what this token offers
 - Value: the information this token carries
 
-The model compares queries with keys to decide attention scores.
+The model compares queries with keys to compute attention scores.
 
-Then it uses those scores to blend the values.
+Then it uses those scores to blend the values into a context-aware representation.
 
 ## Causal masking
 
@@ -54,20 +66,37 @@ In a GPT-style model, a token is only allowed to attend to current and previous 
 
 That matters because during generation, the future has not happened yet.
 
-Example prompt:
+Example prompt fragment:
 
 ```text
 a customer repays
 ```
 
-The model can use `a`, `customer`, and `repays`, but it must not peek at future words.
+The model can use `a`, `customer`, and `repays`, but it must not peek at future words such as `loan` if that token has not been generated yet.
+
+## Banking tutorial example
+
+Prompt:
+
+```text
+You are a banking tutor. Explain how a central bank sets rates to control inflation.
+```
+
+If the model is predicting the next token after `control`, attention may focus strongly on:
+
+- `central`
+- `bank`
+- `rates`
+- `inflation`
+
+That is one reason detailed prompts often work better than short ones: they give attention more useful material to work with.
 
 ## Intuition
 
 Attention is like asking:
 
 ```text
-For this word, which earlier words should I focus on most?
+For this word in this prompt, which earlier words matter most?
 ```
 
 That question is one of the main reasons transformers work so well.

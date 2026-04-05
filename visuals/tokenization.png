@@ -1,4 +1,4 @@
 Placeholder diagram specification:
-Show a banking sentence being split into word-level tokens.
-Example sentence: "A savings account earns interest."
+Show a banking prompt being split into word-level tokens.
+Example prompt: "You are a banking tutor. Explain how a savings account earns interest."
 Represent token IDs under each token.
