@@ -1,8 +1,0 @@
-Placeholder asset note:
-Replace this text file with a short screen recording of the Streamlit app.
-Suggested flow:
-1. Open Prompt Playground.
-2. Enter a banking prompt with role, task, and context.
-3. Generate output.
-4. Switch to Prompt Tokenization Explorer.
-5. Open Prompt Attention Visualization heatmap.

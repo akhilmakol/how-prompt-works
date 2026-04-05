@@ -23,6 +23,20 @@ os.environ.setdefault("MPLCONFIGDIR", str(MPL_CONFIG_DIR))
 import matplotlib.pyplot as plt
 
 
+PROMPT_LIBRARY = {
+    "Zero-shot": "Explain a savings account in simple language.",
+    "One-shot": "Deposit -> banking term\nMortgage -> ?",
+    "Few-shot": "Savings account -> deposit product\nMortgage -> loan product\nCredit card -> ?",
+    "Instruction-based": "Write a professional summary of mortgage interest for new customers.",
+    "Role-based": "You are a senior loan officer. Explain mortgage interest to a first-time borrower.",
+    "Chain-of-Thought": "Explain step by step how interest on a savings account is calculated.",
+    "Contextual": "Our fintech app serves first-time borrowers. Suggest features for a loan education assistant.",
+    "Conversational": "User: I need a bank account.\nAI: What matters most: low fees, high interest, or mobile access?",
+    "Output-constrained": "Return JSON with fields: product_name, benefit, risk.",
+    "Creative": "Write a short story about an AI banker teaching children why saving money matters.",
+}
+
+
 @st.cache_resource
 def ensure_model():
     if not MODEL_PATH.exists():
@@ -57,7 +71,7 @@ def render_attention_heatmap(model, tokenizer, prompt: str) -> None:
 def main() -> None:
     st.set_page_config(page_title="How Prompt Works", layout="wide")
     st.title("How Prompt Works")
-    st.caption("A banking-themed, visual walkthrough of prompt engineering and a mini GPT-style model.")
+    st.caption("A banking-themed walkthrough of prompt engineering types using a small GPT-style demo model.")
     st.info(
         "Prompt framework used across this demo: [Role] + [Task] + [Context] + [Output Format]. "
         "Try prompts like 'You are a banking tutor. Explain savings accounts in 3 bullet points.'"
@@ -67,18 +81,25 @@ def main() -> None:
         model, tokenizer = ensure_model()
 
     tab_generate, tab_tokenize, tab_attention = st.tabs(
-        ["Text Generation", "Tokenization Explorer", "Attention Visualization"]
+        ["Prompt Type Playground", "Prompt Tokenization", "Prompt Attention"]
     )
 
     with tab_generate:
-        st.subheader("Prompt Playground")
+        st.subheader("Prompt Type Playground")
         st.markdown(
-            "Test how different prompt styles change output. Start simple, then add role, context, or format."
+            "Pick a prompt type, review its banking example, and then see how the model continues from that prompt."
         )
-        prompt = st.text_input(
+        if "active_prompt_text" not in st.session_state:
+            st.session_state["active_prompt_text"] = PROMPT_LIBRARY["Role-based"]
+        prompt_type = st.selectbox("Prompt type", list(PROMPT_LIBRARY.keys()))
+        if st.button("Load selected prompt type example", use_container_width=True):
+            st.session_state["active_prompt_text"] = PROMPT_LIBRARY[prompt_type]
+        prompt = st.text_area(
             "Prompt",
-            value="You are a banking tutor. Explain what a bank offers.",
+            key="active_prompt_text",
+            height=120,
         )
+        st.code(prompt, language="text")
         max_new_tokens = st.slider("Max new tokens", min_value=1, max_value=30, value=12)
         if st.button("Generate text", use_container_width=True):
             input_ids = torch.tensor([tokenizer.encode(prompt, add_special_tokens=True)], dtype=torch.long)
@@ -88,10 +109,10 @@ def main() -> None:
 
     with tab_tokenize:
         st.subheader("Prompt Tokenization Explorer")
-        st.markdown("See how a banking prompt is broken into tokens before the model can process it.")
+        st.markdown("See how a banking prompt type is broken into tokens before the model can process it.")
         sample_text = st.text_area(
             "Enter a prompt",
-            value="You are a loan officer. Explain mortgage interest to a first-time homebuyer.",
+            value=PROMPT_LIBRARY["Contextual"],
             height=120,
         )
         tokens = tokenizer.tokenize(sample_text)
@@ -104,11 +125,11 @@ def main() -> None:
         st.subheader("Prompt Attention Visualization")
         attention_prompt = st.text_input(
             "Prompt for attention map",
-            value="the central bank sets rates to control inflation",
+            value="Explain step by step how the central bank changes rates to control inflation",
         )
         st.markdown(
             "This heatmap shows how one attention head in the final transformer layer distributes focus across "
-            "tokens in a banking prompt."
+            "tokens in a banking prompt type."
         )
         render_attention_heatmap(model, tokenizer, attention_prompt)
 

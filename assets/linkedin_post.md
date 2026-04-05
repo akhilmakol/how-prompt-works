@@ -1,23 +1,27 @@
 # LinkedIn Post Draft
 
-I built `how-prompt-works`, a visual and interactive repository that explains prompt engineering and GPT-style language models from first principles.
+I built `how-prompt-works`, a focused educational repository about prompt engineering types explained through banking fundamentals.
 
-To make the learning concrete, I used banking fundamentals as the teaching domain:
+The project walks through prompts such as:
 
-- savings accounts
-- loans
-- interest rates
-- risk management
-- central banking
+- zero-shot
+- one-shot
+- few-shot
+- instruction-based
+- role-based
+- chain-of-thought
+- contextual
+- conversational
+- output-constrained
+- creative
+
+Each prompt type is explained with a simple banking scenario, such as savings accounts, loan education, mortgage interest, borrower onboarding, and financial literacy.
 
 The repo includes:
 
-- a mini GPT-style model in PyTorch
-- prompt-engineering concepts with practical examples
-- end-to-end training and inference
-- a Streamlit app for generation and attention visualization
-- beginner-friendly docs and notebooks
+- prompt-type visuals
+- prompt-type docs
+- prompt-focused notebooks
+- a Streamlit app that lets learners test banking prompts interactively
 
-The goal was simple: make both prompt design and LLM internals understandable without losing architectural correctness.
-
-If you want to learn how prompts, tokenization, embeddings, self-attention, transformer blocks, and autoregressive decoding fit together, this project gives you a clean starting point.
+The goal was simple: make prompt engineering practical, visual, and easy to understand.
