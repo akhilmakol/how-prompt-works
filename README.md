@@ -279,14 +279,16 @@ If `model.pth` is missing, the app automatically trains a fresh model using the 
 
 Read the docs in order:
 
-1. [docs/01_intro.md](docs/01_intro.md)
-2. [docs/02_tokens_embeddings.md](docs/02_tokens_embeddings.md)
-3. [docs/03_attention.md](docs/03_attention.md)
-4. [docs/04_transformer.md](docs/04_transformer.md)
-5. [docs/05_training.md](docs/05_training.md)
-6. [docs/06_inference.md](docs/06_inference.md)
-7. [docs/07_limitations.md](docs/07_limitations.md)
-8. [docs/08_real_world_llms.md](docs/08_real_world_llms.md)
+1. [docs/01_zero_shot_prompt.md](docs/01_zero_shot_prompt.md)
+2. [docs/02_one_shot_prompt.md](docs/02_one_shot_prompt.md)
+3. [docs/03_few_shot_prompt.md](docs/03_few_shot_prompt.md)
+4. [docs/04_instruction_based_prompt.md](docs/04_instruction_based_prompt.md)
+5. [docs/05_role_based_prompt.md](docs/05_role_based_prompt.md)
+6. [docs/06_chain_of_thought_prompt.md](docs/06_chain_of_thought_prompt.md)
+7. [docs/07_contextual_prompt.md](docs/07_contextual_prompt.md)
+8. [docs/08_conversational_prompt.md](docs/08_conversational_prompt.md)
+9. [docs/09_output_constrained_prompt.md](docs/09_output_constrained_prompt.md)
+10. [docs/10_creative_prompt.md](docs/10_creative_prompt.md)
 
 ## Visual references
 
