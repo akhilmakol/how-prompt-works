@@ -1,0 +1,4 @@
+Placeholder diagram specification:
+Show a banking sentence being split into word-level tokens.
+Example sentence: "A savings account earns interest."
+Represent token IDs under each token.

@@ -1,0 +1,3 @@
+Placeholder diagram specification:
+Display a sentence about the central bank and draw attention links between related tokens.
+Highlight that later tokens can attend to earlier tokens, but not future ones.

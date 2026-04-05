@@ -1,0 +1,3 @@
+Placeholder diagram specification:
+Show next-token training using a banking sentence window.
+Illustrate input tokens, shifted targets, logits, and cross-entropy loss.
