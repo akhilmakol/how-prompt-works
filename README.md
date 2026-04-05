@@ -46,6 +46,8 @@ Examples:
 
 No examples are given. Only a direct instruction.
 
+![Zero-shot prompt explained with a banking example](visuals/zero_shot_prompt.png)
+
 Example:
 
 ```text
@@ -57,6 +59,8 @@ Best for simple tasks. Less accurate for harder tasks.
 ### 2. One-shot Prompt
 
 You give one example to guide the model.
+
+![One-shot prompt explained with a banking example](visuals/one_shot_prompt.png)
 
 Example:
 
@@ -70,6 +74,8 @@ Useful when you want the model to follow one clear pattern.
 ### 3. Few-shot Prompt
 
 You provide multiple examples.
+
+![Few-shot prompt explained with a banking example](visuals/few_shot_prompt.png)
 
 Example:
 
@@ -85,6 +91,8 @@ Great for structured outputs and improved accuracy.
 
 You give direct instructions.
 
+![Instruction-based prompt explained with a banking example](visuals/instruction_based_prompt.png)
+
 Example:
 
 ```text
@@ -96,6 +104,8 @@ This is one of the most common prompt styles in real applications.
 ### 5. Role-based Prompt
 
 You assign a role or persona to the model.
+
+![Role-based prompt explained with a banking example](visuals/role_based_prompt.png)
 
 Example:
 
@@ -109,6 +119,8 @@ This often improves domain-specific responses.
 
 You encourage step-by-step reasoning.
 
+![Chain-of-thought prompt explained with a banking example](visuals/chain_of_thought_prompt.png)
+
 Example:
 
 ```text
@@ -121,6 +133,8 @@ Helpful for logic, reasoning, and multi-step thinking.
 
 You provide relevant background information.
 
+![Contextual prompt explained with a banking example](visuals/contextual_prompt.png)
+
 Example:
 
 ```text
@@ -132,6 +146,8 @@ This produces more relevant and tailored output.
 ### 8. Conversational Prompt
 
 You use a back-and-forth format.
+
+![Conversational prompt explained with a banking example](visuals/conversational_prompt.png)
 
 Example:
 
@@ -146,6 +162,8 @@ Useful for dynamic interactions.
 
 You define the desired response format.
 
+![Output-constrained prompt explained with a banking example](visuals/output_constrained_prompt.png)
+
 Example:
 
 ```text
@@ -157,6 +175,8 @@ Important for automation, APIs, and agents.
 ### 10. Creative Prompt
 
 You use prompting for ideation or storytelling.
+
+![Creative prompt explained with a banking example](visuals/creative_prompt.png)
 
 Example:
 
@@ -289,48 +309,6 @@ Read the docs in order:
 8. [docs/08_conversational_prompt.md](docs/08_conversational_prompt.md)
 9. [docs/09_output_constrained_prompt.md](docs/09_output_constrained_prompt.md)
 10. [docs/10_creative_prompt.md](docs/10_creative_prompt.md)
-
-## Prompt Type Visuals
-
-### Zero-shot prompt
-
-![Zero-shot prompt explained with a banking example](visuals/zero_shot_prompt.png)
-
-### One-shot prompt
-
-![One-shot prompt explained with a banking example](visuals/one_shot_prompt.png)
-
-### Few-shot prompt
-
-![Few-shot prompt explained with a banking example](visuals/few_shot_prompt.png)
-
-### Instruction-based prompt
-
-![Instruction-based prompt explained with a banking example](visuals/instruction_based_prompt.png)
-
-### Role-based prompt
-
-![Role-based prompt explained with a banking example](visuals/role_based_prompt.png)
-
-### Chain-of-thought prompt
-
-![Chain-of-thought prompt explained with a banking example](visuals/chain_of_thought_prompt.png)
-
-### Contextual prompt
-
-![Contextual prompt explained with a banking example](visuals/contextual_prompt.png)
-
-### Conversational prompt
-
-![Conversational prompt explained with a banking example](visuals/conversational_prompt.png)
-
-### Output-constrained prompt
-
-![Output-constrained prompt explained with a banking example](visuals/output_constrained_prompt.png)
-
-### Creative prompt
-
-![Creative prompt explained with a banking example](visuals/creative_prompt.png)
 
 ## Tests
 
