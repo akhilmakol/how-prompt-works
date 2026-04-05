@@ -290,16 +290,18 @@ Read the docs in order:
 
 ## Visual references
 
-The files in [visuals/](visuals) are text-based placeholders that describe what each final diagram should illustrate:
+The files in [visuals/](visuals) now include prompt-engineering visuals named by prompt type:
 
-- `cover.png`
-- `pipeline.png`
-- `tokenization.png`
-- `embeddings.png`
-- `attention.png`
-- `transformer.png`
-- `training.png`
-- `inference.png`
+- `zero_shot_prompt.png`
+- `one_shot_prompt.png`
+- `few_shot_prompt.png`
+- `instruction_based_prompt.png`
+- `role_based_prompt.png`
+- `chain_of_thought_prompt.png`
+- `contextual_prompt.png`
+- `conversational_prompt.png`
+- `output_constrained_prompt.png`
+- `creative_prompt.png`
 
 ## Tests
 

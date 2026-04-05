@@ -107,3 +107,45 @@ Our examples focus on common banking topics:
 - fraud detection
 
 That gives us a clear and realistic domain for both prompt design and model internals.
+
+## Prompt Type Visual Gallery
+
+### Zero-shot prompt
+
+![Zero-shot prompt explained with a banking example](../visuals/zero_shot_prompt.png)
+
+### One-shot prompt
+
+![One-shot prompt explained with a banking example](../visuals/one_shot_prompt.png)
+
+### Few-shot prompt
+
+![Few-shot prompt explained with a banking example](../visuals/few_shot_prompt.png)
+
+### Instruction-based prompt
+
+![Instruction-based prompt explained with a banking example](../visuals/instruction_based_prompt.png)
+
+### Role-based prompt
+
+![Role-based prompt explained with a banking example](../visuals/role_based_prompt.png)
+
+### Chain-of-thought prompt
+
+![Chain-of-thought prompt explained with a banking example](../visuals/chain_of_thought_prompt.png)
+
+### Contextual prompt
+
+![Contextual prompt explained with a banking example](../visuals/contextual_prompt.png)
+
+### Conversational prompt
+
+![Conversational prompt explained with a banking example](../visuals/conversational_prompt.png)
+
+### Output-constrained prompt
+
+![Output-constrained prompt explained with a banking example](../visuals/output_constrained_prompt.png)
+
+### Creative prompt
+
+![Creative prompt explained with a banking example](../visuals/creative_prompt.png)
