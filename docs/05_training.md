@@ -32,7 +32,7 @@ works only if the model has already learned useful associations around words lik
 
 ## Training data
 
-We train on [data/sample.txt](/C:/dev/how-prompt-works/data/sample.txt), which contains short banking-fundamental statements.
+We train on [data/sample.txt](../data/sample.txt), which contains short banking-fundamental statements.
 
 Examples include:
 

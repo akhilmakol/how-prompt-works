@@ -55,8 +55,8 @@ def render_attention_heatmap(model, tokenizer, prompt: str) -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="How LLM Works", layout="wide")
-    st.title("How LLM Works")
+    st.set_page_config(page_title="How Prompt Works", layout="wide")
+    st.title("How Prompt Works")
     st.caption("A banking-themed, visual walkthrough of prompt engineering and a mini GPT-style model.")
     st.info(
         "Prompt framework used across this demo: [Role] + [Task] + [Context] + [Output Format]. "

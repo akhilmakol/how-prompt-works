@@ -1,6 +1,6 @@
 # LinkedIn Post Draft
 
-I built `how-llm-works`, a visual and interactive repository that explains prompt engineering and GPT-style language models from first principles.
+I built `how-prompt-works`, a visual and interactive repository that explains prompt engineering and GPT-style language models from first principles.
 
 To make the learning concrete, I used banking fundamentals as the teaching domain:
 

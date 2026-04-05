@@ -1,6 +1,6 @@
-# how-llm-works
+# how-prompt-works
 
-`how-llm-works` is a visual, interactive, beginner-friendly repository that explains prompt engineering and a small GPT-style language model from first principles using banking fundamentals as the teaching domain.
+`how-prompt-works` is a visual, interactive, beginner-friendly repository that explains prompt engineering and a small GPT-style language model from first principles using banking fundamentals as the teaching domain.
 
 This repository is built around two connected ideas:
 
@@ -228,7 +228,7 @@ The model follows a minimal GPT-style decoder-only design:
 ## Repository layout
 
 ```text
-how-llm-works/
+how-prompt-works/
 |-- app/ui.py
 |-- src/
 |-- docs/
@@ -253,7 +253,7 @@ pip install -r requirements.txt
 python -m src.train
 ```
 
-This reads [data/sample.txt](/C:/dev/how-prompt-works/data/sample.txt), trains a small language model, and saves `model.pth` in the repository root.
+This reads [data/sample.txt](data/sample.txt), trains a small language model, and saves `model.pth` in the repository root.
 
 ## Generate text
 
@@ -279,18 +279,18 @@ If `model.pth` is missing, the app automatically trains a fresh model using the 
 
 Read the docs in order:
 
-1. [docs/01_intro.md](/C:/dev/how-prompt-works/docs/01_intro.md)
-2. [docs/02_tokens_embeddings.md](/C:/dev/how-prompt-works/docs/02_tokens_embeddings.md)
-3. [docs/03_attention.md](/C:/dev/how-prompt-works/docs/03_attention.md)
-4. [docs/04_transformer.md](/C:/dev/how-prompt-works/docs/04_transformer.md)
-5. [docs/05_training.md](/C:/dev/how-prompt-works/docs/05_training.md)
-6. [docs/06_inference.md](/C:/dev/how-prompt-works/docs/06_inference.md)
-7. [docs/07_limitations.md](/C:/dev/how-prompt-works/docs/07_limitations.md)
-8. [docs/08_real_world_llms.md](/C:/dev/how-prompt-works/docs/08_real_world_llms.md)
+1. [docs/01_intro.md](docs/01_intro.md)
+2. [docs/02_tokens_embeddings.md](docs/02_tokens_embeddings.md)
+3. [docs/03_attention.md](docs/03_attention.md)
+4. [docs/04_transformer.md](docs/04_transformer.md)
+5. [docs/05_training.md](docs/05_training.md)
+6. [docs/06_inference.md](docs/06_inference.md)
+7. [docs/07_limitations.md](docs/07_limitations.md)
+8. [docs/08_real_world_llms.md](docs/08_real_world_llms.md)
 
 ## Visual references
 
-The files in [visuals/](/C:/dev/how-prompt-works/visuals) are text-based placeholders that describe what each final diagram should illustrate:
+The files in [visuals/](visuals) are text-based placeholders that describe what each final diagram should illustrate:
 
 - `cover.png`
 - `pipeline.png`
@@ -326,4 +326,4 @@ The app is useful for teaching prompt engineering with banking scenarios such as
 
 ## License
 
-This repository uses the MIT License in [LICENSE](/C:/dev/how-prompt-works/LICENSE).
+This repository uses the MIT License in [LICENSE](LICENSE).

@@ -36,4 +36,4 @@ The big lesson is that modern LLMs are larger and more capable, but the first-pr
 5. train to predict the next token
 6. generate one token at a time
 
-That is what `how-llm-works` is designed to make intuitive.
+That is what `how-prompt-works` is designed to make intuitive.
