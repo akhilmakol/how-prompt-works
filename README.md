@@ -7,16 +7,6 @@ This repository is built around two connected ideas:
 1. A prompt is the instruction or context you give an AI model.
 2. A language model transforms that prompt into tokens, attention patterns, and next-token predictions.
 
-## Overview
-
-The project includes:
-
-- A clean PyTorch implementation of a tiny GPT-style model
-- End-to-end training and greedy text generation
-- A Streamlit app for token exploration, generation, and attention visualization
-- Step-by-step docs that explain prompting and model internals with banking examples
-- Lightweight notebooks and tests to support learning and verification
-
 ## What Is a Prompt?
 
 A prompt is simply the input or instruction you give to an AI model to guide its response.
